@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React, { FC } from 'react';
-import { Link, LinkProps } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
 const StyledSidebarLink = styled.div<any>`
   display: flex;
@@ -14,16 +14,32 @@ const IconWrapper = styled.span`
   line-height: 0;
 `;
 
+const Link = styled(RouterLink)`
+  display: contents;
+`;
+
 type Props = {
   icon: JSX.Element;
   children: any;
   onClick?: Function;
-  to?: LinkProps['to'];
+  to?: string;
 };
+
+const Content = ({ icon, children }: Pick<Props, 'icon' | 'children'>) => (
+  <>
+    <IconWrapper>{icon}</IconWrapper>
+    {children}
+  </>
+);
 
 export const SidebarLink: FC<Props> = ({ icon, children, onClick, to }) => (
   <StyledSidebarLink onClick={onClick}>
-    <IconWrapper>{icon}</IconWrapper>
-    {to ? <Link to={to}>{children}</Link> : children}
+    {to ? (
+      <Link to={to}>
+        <Content icon={icon}>{children}</Content>
+      </Link>
+    ) : (
+      <Content icon={icon}>{children}</Content>
+    )}
   </StyledSidebarLink>
 );
