@@ -17,7 +17,7 @@ export const App: FC = () => {
 
   return (
     <>
-    <GlobalStyle theme={theme} />
+      <GlobalStyle theme={theme} />
       <Container>
         <Router history={history}>
           <Sidebar>
